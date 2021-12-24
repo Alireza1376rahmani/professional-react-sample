@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+.ant-avatar > img{
+  object-fit: contain;
+}
+
+.hidden{
+  display: none;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.modal_container {
+  .ant-modal-confirm-btns {
+    .ant-btn {
+      &:first-child {
+        color: #717579;
+        background: transparent;
+        box-shadow: none;
+
+        &:hover {
+          background: transparent;
+          color: #717579;
+          border: 1px solid #717579;
+        }
+        &:active {
+          background: transparent;
+          color: #717579;
+          border: 1px solid #717579;
+        }
+        &:focus {
+          background: transparent;
+          color: #717579;
+          border: 1px solid #717579;
+        }
+      }
+
+      &:last-child {
+        background: #886cc0;
+        border-color: #886cc0;
+        &:hover {
+          background: #756399;
+          color: #fff;
+        }
+        &:active {
+          background: #886cc0;
+          color: #fff;
+        }
+        &:focus {
+          background: #886cc0;
+          color: #fff;
+        }
+        &[disabled] {
+          background: #e7e7e7;
+          color: #616161;
+        }
+      }
+    }
+  }
+}
+
+.filter_icon {
+
+  &.apply svg {
+    width: 21px;
+    height: 22px;
+    path {
+      fill: #886cc0;
+    }
+  }
+  &.clear svg {
+    width: 20px;
+    height: 21px;
+    path {
+      fill: #717579;
+    }
+  }
+}

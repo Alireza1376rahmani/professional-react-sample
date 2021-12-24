@@ -1,0 +1,7 @@
+import client from './main-client';
+
+export const {{> fetchAllServiceName }} = params => client().get('/{{kebabCase name}}', { params });
+export const {{> fetchOneServiceName }} = ({ id, ...params }) => client().get(`/{{kebabCase name}}/${id}`, { params });
+export const {{> updateServiceName }} = params => client().put(`/{{kebabCase name}}/${params.id}`, params.values);
+export const {{> addServiceName }} = data => client().post('/{{kebabCase name}}', data);
+export const {{> deleteServiceName }} = params => client().delete(`/{{kebabCase name}}/${params.id}`, { params });

@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "jsx": "preserve",
+    "baseUrl": "src",
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "actions/*": ["src/actions"],
+      "configs/*": ["src/configs"],
+      "reducers/*": ["src/reducers"],
+      "sagas/*": ["src/sagas"],
+      "selectors/*": ["src/selectors"],
+      "services/*": ["src/services"],
+      "containers/*": ["src/containers"],
+      "components/*": ["src/components"],
+      "constants/*": ["src/constants"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

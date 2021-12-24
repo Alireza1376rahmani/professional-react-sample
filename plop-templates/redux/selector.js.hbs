@@ -1,0 +1,49 @@
+import {
+  {{> fetchAllActionName }},
+  {{> fetchOneActionName }},
+  {{> addActionName }},
+  {{> updateActionName }},
+} from 'actions/{{kebabCase name}}';
+
+import { createSelector } from 'reselect';
+import createLoadingSelector from './create-loading-selector';
+import createErrorSelector from './create-error-selector';
+
+export const get{{pascalCase name}} = state => state.{{camelCase name}};
+export const get{{pascalCase name}}State = createSelector(
+  get{{pascalCase name}},
+  (data) => ((data.{{camelCase name}}) ? data.{{camelCase name}} : []),
+);
+
+export const getSuccessState = createSelector(
+  get{{pascalCase name}},
+  (data) => data.isSuccessful,
+);
+export const getSelected{{pascalCase singularName}} = createSelector(
+  get{{pascalCase name}},
+  (data) => data.selected{{pascalCase singularName}},
+);
+
+export const {{camelCase name}}ValuesLoading = createLoadingSelector(fetch{{pascalCase name}}.actionName)();
+export const {{camelCase name}}ValuesError = createErrorSelector(fetch{{pascalCase name}}.actionName)();
+
+export const getAdd{{pascalCase singularName}}Loading = createLoadingSelector(
+  {{> addActionName }}.actionName,
+)();
+export const getAdd{{pascalCase singularName}}Error = createErrorSelector(
+  {{> addActionName }}.actionName,
+)();
+
+export const getUpdate{{pascalCase singularName}}Loading = createLoadingSelector(
+  {{> updateActionName }}.actionName,
+)();
+export const getUpdate{{pascalCase singularName}}Error = createErrorSelector(
+  {{> updateActionName }}.actionName,
+)();
+
+export const getSelected{{pascalCase singularName}}Loading = createLoadingSelector(
+  {{> fetchOneActionName }}.actionName,
+)();
+export const getSelected{{pascalCase singularName}}Error = createErrorSelector(
+  {{> fetchOneActionName }}.actionName,
+)();

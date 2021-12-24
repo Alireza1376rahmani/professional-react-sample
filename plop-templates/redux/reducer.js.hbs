@@ -1,0 +1,71 @@
+import {
+  {{> fetchAllActionName }},
+  {{> fetchOneActionName }},
+  {{> addActionName }},
+  {{> updateActionName }},
+  {{> deleteActionName }},
+} from 'actions/{{kebabCase name}}';
+
+const {{camelCase name}} = () => {
+  const initialState = {
+    {{camelCase name}}: null,
+    selected{{pascalCase singularName}}: null,
+  };
+
+  return (state = initialState, { type, response }) => {
+    switch (type) {
+      case {{> fetchAllActionName }}.requestTypes.SUCCESS:
+        return {
+          selected{{pascalCase singularName}}: null,
+          {{camelCase name}}: response,
+        };
+      case {{> addActionName }}.requestTypes.REQUEST:
+        return {
+          ...state,
+          isSuccessful: false,
+        };
+      case {{> addActionName }}.requestTypes.FAILURE:
+        return {
+          ...state,
+          isSuccessful: false,
+        };
+      case {{> addActionName }}.requestTypes.SUCCESS:
+        return {
+          ...state,
+          selected{{pascalCase singularName}}: response,
+          isSuccessful: true,
+        };
+      case {{> updateActionName }}.requestTypes.REQUEST:
+        return {
+          ...state,
+          isSuccessful: false,
+        };
+      case {{> updateActionName }}.requestTypes.FAILURE:
+        return {
+          ...state,
+          isSuccessful: false,
+        };
+      case {{> updateActionName }}.requestTypes.SUCCESS:
+        return {
+          ...state,
+          selected{{pascalCase singularName}}: response,
+          isSuccessful: true,
+        };
+      case {{> fetchOneActionName }}.requestTypes.SUCCESS:
+        return {
+          ...state,
+          selected{{pascalCase singularName}}: response,
+        };
+      case {{> deleteActionName }}.requestTypes.SUCCESS:
+        return {
+          ...state,
+          [response.type]: { ...state[response.type], total: state.total - response.ids.length },
+          type: response.type,
+        };
+      default:
+        return state;
+    }
+  };
+};
+
+export default {{camelCase name}}();

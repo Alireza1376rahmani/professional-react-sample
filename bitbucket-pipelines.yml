@@ -1,0 +1,49 @@
+image: node:10.15.3
+
+pipelines:
+  branches:
+    dev:
+      - step:
+          name: Create artifact
+          script:
+            - chmod +x deploy/tar-app.sh
+            - deploy/tar-app.sh
+          artifacts:
+          - app.tgz
+      - step:
+          name: Deploy to Development Server
+          script:
+            - pipe: atlassian/heroku-deploy:0.1.1
+              variables:
+                HEROKU_API_KEY: $HEROKU_API_KEY
+                HEROKU_APP_NAME: $HEROKU_APP_NAME
+                ZIP_FILE: "app.tgz"
+                WAIT: 'true'
+    master:
+      - step:
+          name: Test application
+          caches:
+            - node
+          script:
+            - npm install
+            - npm test
+      - step:
+          name: Build Application
+          script:
+            - chmod +x deploy/build-prod-app.sh
+            - deploy/build-prod-app.sh
+          artifacts:
+            - build/**
+      - step:
+          name: Deploy to Production
+          script:
+            - pipe: atlassian/rsync-deploy:0.3.2
+              variables:
+                USER: 'root'
+                SERVER: '159.203.12.1522'
+                REMOTE_PATH: '/var/www/app.inspector.ca/public'
+                LOCAL_PATH: 'build'
+definitions:
+  services:
+    postgres:
+      image: postgres

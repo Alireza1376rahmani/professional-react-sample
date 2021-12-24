@@ -1,0 +1,93 @@
+import { call, takeLatest, put, select } from 'redux-saga/effects';
+import {
+  {{> fetchAllActionName }},
+  {{> fetchOneActionName }},
+  {{> addActionName }},
+  {{> updateActionName }},
+  {{> deleteActionName }},
+} from 'actions/{{kebabCase name}}';
+import {
+  {{> fetchAllServiceName }},
+  {{> fetchOneServiceName }},
+  {{> addServiceName }},
+  {{> updateServiceName }},
+  {{> deleteServiceName }},
+} from 'services/{{kebabCase name}}';
+import fetchEntity from './fetch-entity';
+
+const fetch{{pascalCase name}}Data = fetchEntity.bind(null, {{> fetchAllActionName }}.actions, {{> fetchAllServiceName }});
+
+const fetch{{pascalCase singularName}}Data = fetchEntity.bind(null, {{> fetchOneActionName }}.actions, {{> fetchOneServiceName }});
+
+const fetchAdd{{pascalCase singularName}} = fetchEntity.bind(null, {{> addActionName }}.actions, {{> addServiceName }});
+
+const fetchUpdate{{pascalCase singularName}} = fetchEntity.bind(null, {{> updateActionName }}.actions, {{> updateServiceName }});
+
+const fetchDelete{{pascalCase singularName}} = fetchEntity.bind(null, {{> deleteActionName }}.actions, {{> deleteServiceName }});
+
+export function* loadFetch{{pascalCase name}}({ params }) {
+  yield call(fetch{{pascalCase name}}Data, { ...params });
+}
+
+export function* loadGet{{pascalCase singularName}}({ params }) {
+  yield put({{> fetchOneActionName }}.actions.failure({}, undefined));
+  yield call(fetch{{pascalCase singularName}}Data, params);
+}
+
+export function* loadAdd{{pascalCase singularName}}({ params }) {
+  yield call(fetchAdd{{pascalCase singularName}}, params);
+}
+
+export function* loadUpdate{{pascalCase singularName}}({ params }) {
+  yield call(fetchUpdate{{pascalCase singularName}}, params);
+}
+
+export function* loadDelete{{pascalCase singularName}}({ params }) {
+  yield call(fetchDelete{{pascalCase singularName}}, { ...params });
+}
+
+function* watchFetch{{pascalCase name}}() {
+  yield takeLatest({{> fetchAllActionName }}.actionName, loadFetch{{pascalCase name}});
+}
+
+function* watchAdd{{pascalCase singularName}}() {
+  yield takeLatest({{> addActionName }}.actionName, loadAdd{{pascalCase singularName}});
+}
+
+function* watchUpdate{{pascalCase singularName}}() {
+  yield takeLatest({{> updateActionName }}.actionName, loadUpdate{{pascalCase singularName}});
+}
+
+function* watchDelete{{pascalCase singularName}}() {
+  yield takeLatest({{> deleteActionName }}.actionName, loadDelete{{pascalCase singularName}});
+}
+
+function* watchGet{{pascalCase singularName}}() {
+  yield takeLatest({{> fetchOneActionName }}.actionName, loadGet{{pascalCase singularName}});
+}
+
+export function* load{{pascalCase name}}OnChange({ params }) {
+  const {{camelCase name}} = yield select(state => state.{{camelCase name}});
+  const { total, skip, limit } = {{camelCase name}};
+  if (skip && skip >= total) {
+    yield call(fetch{{pascalCase name}}Data, {
+      $skip: total - Math.max(total % limit, limit),
+      '$sort[updatedAt]': -1,
+    });
+  } else {
+    yield call(fetch{{pascalCase name}}Data, { $skip: skip, '$sort[updatedAt]': -1 });
+  }
+}
+
+function* watch{{pascalCase name}}OnChange() {
+  yield takeLatest([{{> deleteActionName }}.requestTypes.SUCCESS], load{{pascalCase name}}OnChange);
+}
+
+export default {
+  watchFetch{{pascalCase name}},
+  watchAdd{{pascalCase singularName}},
+  watchGet{{pascalCase singularName}},
+  watchUpdate{{pascalCase singularName}},
+  watch{{pascalCase name}}OnChange,
+  watchDelete{{pascalCase singularName}},
+};

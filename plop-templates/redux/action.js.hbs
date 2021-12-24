@@ -1,0 +1,52 @@
+import { makeRequestAction } from './index';
+
+/**
+ * Fetch {{name}}
+ */
+export const {{> fetchAllActionName }} = makeRequestAction('FETCH_{{constantCase name}}', {
+  onSuccess(params, response) {
+    return {
+      response: {
+        ...response,
+      },
+    };
+  },
+});
+
+export const {{> addActionName }} = makeRequestAction('ADD_{{constantCase singularName}}', {
+  onSuccess(params, response) {
+    return {
+      response: {
+        ...response,
+      },
+    };
+  },
+});
+
+export const {{> updateActionName }} = makeRequestAction('UPDATE_{{constantCase singularName}}', {
+  onSuccess(params, response) {
+    return {
+      response: {
+        ...response,
+      },
+    };
+  },
+});
+
+export const {{> fetchOneActionName }} = makeRequestAction('GET_{{constantCase singularName}}', {
+  onSuccess(params, response) {
+    return {
+      response: {
+        ...response,
+      },
+    };
+  },
+});
+
+export const {{> deleteActionName }} = makeRequestAction('DELETE_{{constantCase singularName}}', {
+  onSuccess(params, response) {
+    return {
+      response: { ids: [response.id], type: response.type },
+    };
+  },
+});
